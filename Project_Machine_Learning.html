@@ -61,7 +61,8 @@ August 2015</p>
 <div id="load-data" class="section level3">
 <h3>Load Data</h3>
 <p>First we need to read the files (included in the repo). After an analysis of the data, to avoid problems with missing data I decided to consider as NA’s: [“NA”, “#DIV/0!”, “”], considering them as moments when the user didn’t do anything or problems with the devices gathering the data.</p>
-<pre class="r"><code>library(AppliedPredictiveModeling); library(caret); library(rattle); library(randomForest)
+<pre class="r"><code>library(AppliedPredictiveModeling); library(caret); library(rattle); library(randomForest); library(doParallel);
+registerDoParallel(cores=2)
 
 train_data&lt;-read.csv(&quot;pml-training.csv&quot;,header=TRUE,na.strings=c(&quot;NA&quot;,&quot;#DIV/0!&quot;,&quot;&quot;)) 
 test_data&lt;-read.csv(&quot;pml-testing.csv&quot;,header=TRUE,na.strings=c(&quot;NA&quot;,&quot;#DIV/0!&quot;,&quot;&quot;))</code></pre>
@@ -93,13 +94,14 @@ useful_var&lt;-c(useful_var,&quot;classe&quot;)
 vars&lt;-names(train_data2) %in% useful_var
 train_data3&lt;-train_data2[vars]
 test_data3&lt;-test_data2[vars]
-dim(train_data3);dim(test_data3)</code></pre>
-<pre><code>## [1] 19622    53</code></pre>
-<pre><code>## [1] 20 53</code></pre>
-<pre class="r"><code>#Just to be sure we check if both data sets have the same columns
+
+#Just to be sure we check if both data sets have the same columns
 all.equal(names(train_data3),names(test_data3))</code></pre>
 <pre><code>## [1] &quot;1 string mismatch&quot;</code></pre>
-<p>We finally get 53 columns that are going to be part of our model, and the only different column is “classe” in train and “problem_id” in test</p>
+<p>We finally get 53 columns that are going to be part of our model, and the only different column is “classe” in train and “problem_id” in test.</p>
+</div>
+<div id="model-building" class="section level3">
+<h3>Model Building</h3>
 </div>
 </div>
 </div>

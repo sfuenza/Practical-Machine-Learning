@@ -14,7 +14,8 @@ August 2015
 First we need to read the files (included in the repo). After an analysis of the data, to avoid problems with missing data I decided to consider as NA's: ["NA", "#DIV/0!", ""], considering them as moments when the user didn't do anything or problems with the devices gathering the data.
 
 ```{r load_data, echo=TRUE,warning=FALSE, message=FALSE}
-library(AppliedPredictiveModeling); library(caret); library(rattle); library(randomForest)
+library(AppliedPredictiveModeling); library(caret); library(rattle); library(randomForest); library(doParallel);
+registerDoParallel(cores=2)
 
 train_data<-read.csv("pml-training.csv",header=TRUE,na.strings=c("NA","#DIV/0!","")) 
 test_data<-read.csv("pml-testing.csv",header=TRUE,na.strings=c("NA","#DIV/0!",""))
